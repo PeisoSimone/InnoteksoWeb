@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 60">
+  <!-- Logo Text -->
+  <text x="10" y="45" font-family="Arial, sans-serif" font-weight="bold" font-size="40">
+    <tspan fill="#ffffff">inno</tspan><tspan fill="#3b82f6">tekso</tspan>
+  </text>
+  
+  <!-- Tech Circle -->
+  <circle cx="240" cy="30" r="8" fill="#3b82f6"/>
+  
+  <!-- Connecting Lines -->
+  <path d="M235 30 H245" stroke="#3b82f6" stroke-width="2"/>
+  <path d="M240 25 V35" stroke="#3b82f6" stroke-width="2"/>
+</svg>

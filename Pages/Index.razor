@@ -1,0 +1,125 @@
+﻿@page "/"
+@using InnoteksoWeb.Models
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+
+<div class="min-h-screen bg-gradient-to-b from-gray-900 to-blue-900 text-white">
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
+        <div class="container mx-auto px-6 z-20">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-6xl font-bold mb-8 animate-on-scroll opacity-0 translate-y-10">
+                    Innovation Meets Technology
+                </h1>
+                <p class="text-xl md:text-2xl mb-12 animate-on-scroll opacity-0 translate-y-10">
+                    Pioneering the frontier of technological advancement
+                </p>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 flex items-center mx-auto">
+                    Get Started
+                    <i class="ml-2 fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-opacity-50 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 animate-on-scroll opacity-0 translate-y-10">
+                Our Solutions
+            </h2>
+            <div class="grid md:grid-cols-3 gap-12">
+                @foreach (var feature in Features)
+                {
+                    <div class="text-center p-8 rounded-lg bg-gray-800 bg-opacity-50 animate-on-scroll opacity-0 translate-y-10">
+                        <div class="flex justify-center">
+                            <i class="@feature.IconClass w-12 h-12 mb-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">@feature.Title</h3>
+                        <p class="text-gray-300">@feature.Description</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-8 animate-on-scroll opacity-0 translate-y-10">
+                    From Concept to Creation
+                </h2>
+                <p class="text-xl text-gray-300 mb-12 animate-on-scroll opacity-0 translate-y-10">
+                    Our team of experts works closely with you to understand your needs and craft tailored solutions
+                    that seamlessly integrate with your existing infrastructure.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-blue-600">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8 animate-on-scroll opacity-0 translate-y-10">
+                Ready to Transform Your Business?
+            </h2>
+            <p class="text-xl mb-12 animate-on-scroll opacity-0 translate-y-10">
+                Let's work together to unlock new opportunities and drive success in the digital age.
+            </p>
+            <button @onclick="ContactUs" class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300">
+                Contact Us Today
+            </button>
+        </div>
+    </section>
+</div>
+
+@code {
+    private List<FeatureModel> Features = new()
+    {
+        new FeatureModel
+        {
+            IconClass = "fas fa-desktop",
+            Title = "Digital Transformation",
+            Description = "Modernize your business with cutting-edge digital solutions"
+        },
+        new FeatureModel
+        {
+            IconClass = "fas fa-microchip",
+            Title = "AI & Machine Learning",
+            Description = "Harness the power of artificial intelligence for your operations"
+        },
+        new FeatureModel
+        {
+            IconClass = "fas fa-rocket",
+            Title = "Innovation Labs",
+            Description = "Create and test groundbreaking solutions in our innovation labs"
+        }
+    };
+
+    private IJSObjectReference? _module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/scrollAnimations.js");
+            await _module.InvokeVoidAsync("initScrollAnimations");
+        }
+    }
+
+    private async Task ContactUs()
+    {
+        // Implement contact form logic here
+        await JSRuntime.InvokeVoidAsync("alert", "Contact form will be implemented here!");
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (_module is not null)
+        {
+            await _module.DisposeAsync();
+        }
+    }
+}
