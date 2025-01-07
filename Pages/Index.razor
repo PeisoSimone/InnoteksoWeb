@@ -3,25 +3,78 @@
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
 
+
+<Modal @ref="contactModal" title="Get in touch with us..." IsScrollable="true">
+    <BodyTemplate>
+        @if (showSuccessMessage)
+        {
+            <div class="alert alert-success">
+                Your message has been sent successfully!
+            </div>
+        }
+        else
+        {
+            <EditForm Model="contactModel" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="mb-3">
+                    <label class="form-label">First Name</label>
+                    <InputText class="form-control" @bind-Value="contactModel.FirstName" />
+                    <ValidationMessage For="@(() => contactModel.FirstName)" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Last Name</label>
+                    <InputText class="form-control" @bind-Value="contactModel.LastName" />
+                    <ValidationMessage For="@(() => contactModel.LastName)" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Contact Number</label>
+                    <InputText class="form-control" @bind-Value="contactModel.ContactNumber" />
+                    <ValidationMessage For="@(() => contactModel.ContactNumber)" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <InputText class="form-control" @bind-Value="contactModel.Email" />
+                    <ValidationMessage For="@(() => contactModel.Email)" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <InputTextArea class="form-control" rows="3" @bind-Value="contactModel.Message" />
+                    <ValidationMessage For="@(() => contactModel.Message)" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </EditForm>
+        }
+    </BodyTemplate>
+</Modal>
+
+
+
 <div class="min-h-screen bg-gradient-to-b from-gray-900 to-blue-900 text-white">
     <!-- Hero Section -->
-    <header class="relative h-screen flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
+    <header class="hero-section h-screen flex items-center justify-center overflow-hidden">
+        <div class="hero-overlay"></div>
         <div class="container mx-auto px-6 z-20">
             <div class="text-center">
                 <h1 class="text-5xl md:text-6xl font-bold mb-8 animate-on-scroll opacity-0 translate-y-10">
-                    Innovation Meets Technology
                 </h1>
-                <p class="text-xl md:text-2xl mb-12 animate-on-scroll opacity-0 translate-y-10">
-                    Pioneering the frontier of technological advancement
-                </p>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 flex items-center mx-auto">
+                <h4 class="text-xl md:text-2xl mb-12 animate-on-scroll opacity-0 translate-y-10">
+                    Innotekso is all about driving innovation and creating tech solutions that work for you. From idea to implementation, our expert team partners with you to design custom solutions that fit your needs and integrate smoothly into your systems. Whether it's improving efficiency, streamlining operations, or opening up new possibilities, we're here to help you succeed.
+                </h4>
+                <button @onclick="ContactUs" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 flex items-center mx-auto">
                     Get Started
                     <i class="ml-2 fas fa-arrow-right"></i>
                 </button>
             </div>
         </div>
     </header>
+
 
     <!-- Features Section -->
     <section class="py-20 bg-opacity-50 bg-gray-900">
@@ -34,7 +87,7 @@
                 {
                     <div class="text-center p-8 rounded-lg bg-gray-800 bg-opacity-50 animate-on-scroll opacity-0 translate-y-10">
                         <div class="flex justify-center">
-                            <i class="@feature.IconClass w-12 h-12 mb-6"></i>
+                            <i class="@feature.IconClass w-32 h-32 mb-6"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-4">@feature.Title</h3>
                         <p class="text-gray-300">@feature.Description</p>
@@ -81,24 +134,28 @@
         new FeatureModel
         {
             IconClass = "fas fa-desktop",
-            Title = "Digital Transformation",
-            Description = "Modernize your business with cutting-edge digital solutions"
+            Title = "Web,Mobile & Cross-platform Apps",
+            Description = "Modernize your business with Cutting-Edge digital solutions"
         },
         new FeatureModel
         {
             IconClass = "fas fa-microchip",
-            Title = "AI & Machine Learning",
-            Description = "Harness the power of artificial intelligence for your operations"
+            Title = "Cloud, AI & Machine Learning Intergrations",
+            Description = "Harness the power of New_Technology for your operations"
         },
         new FeatureModel
         {
             IconClass = "fas fa-rocket",
-            Title = "Innovation Labs",
-            Description = "Create and test groundbreaking solutions in our innovation labs"
+            Title = "Ideas to Innovation Solutions",
+            Description = "Create and test groundbreaking solutions in our labs"
         }
     };
 
+    private Modal contactModal = default!;
+    private bool showSuccessMessage = false;
+    private ContactModel contactModel = new();
     private IJSObjectReference? _module;
+
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -109,12 +166,37 @@
         }
     }
 
+
     private async Task ContactUs()
     {
-        // Implement contact form logic here
-        await JSRuntime.InvokeVoidAsync("alert", "Contact form will be implemented here!");
+        contactModel = new ContactModel();
+        showSuccessMessage = false;
+        await contactModal.ShowAsync();
+    }
+    private async Task CloseModal()
+    {
+        await contactModal.HideAsync();
     }
 
+    private async Task HandleValidSubmit()
+    {
+        var message = $"Hello, my name is {contactModel.FirstName} {contactModel.LastName}.\n\n" +
+                      $"Contact Number: {contactModel.ContactNumber}\n" +
+                      $"Email: {contactModel.Email}\n\n" +
+                      $"Message:\n{contactModel.Message}";
+
+        var encodedMessage = Uri.EscapeDataString(message);
+        var whatsappUrl = $"https://wa.me/27815538518?text={encodedMessage}";
+
+        await JSRuntime.InvokeVoidAsync("open", whatsappUrl, "_blank");
+
+        showSuccessMessage = true;
+        StateHasChanged();
+        await Task.Delay(3000);
+        await contactModal.HideAsync();
+        showSuccessMessage = false;
+        contactModel = new ContactModel();
+    }
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
         if (_module is not null)

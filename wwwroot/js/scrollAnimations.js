@@ -1,16 +1,30 @@
-﻿export function initScrollAnimations() {
+﻿let prevScrollPos = window.scrollY;
+
+export function initScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
+        rootMargin: "-50px 0px -50px 0px"
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            const currentScrollPos = window.scrollY;
+            const scrollingDown = currentScrollPos > prevScrollPos;
+
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-in');
+                entry.target.classList.remove('scroll-out');
+                entry.target.classList.add('scroll-in');
                 entry.target.classList.remove('opacity-0');
                 entry.target.classList.remove('translate-y-10');
+            } else {
+
+                if (!scrollingDown && entry.boundingClientRect.top < 0) {
+                    entry.target.classList.remove('scroll-in');
+                    entry.target.classList.add('scroll-out');
+                }
             }
+
+            prevScrollPos = currentScrollPos;
         });
     }, observerOptions);
 
@@ -21,3 +35,8 @@
         animatedElements.forEach(el => observer.unobserve(el));
     };
 }
+
+window.addEventListener('scroll', () => {
+    const currentScrollPos = window.scrollY;
+    prevScrollPos = currentScrollPos;
+}, { passive: true });

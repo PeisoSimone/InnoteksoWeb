@@ -118,10 +118,10 @@ code {
 @tailwind components;
 @tailwind utilities;
 
-@keyframes fadeIn {
+@keyframes scrollIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(-50px);
     }
 
     to {
@@ -130,6 +130,47 @@ code {
     }
 }
 
-.animate-fade-in {
-    animation: fadeIn 1s ease-out forwards;
+@keyframes scrollOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(50px); 
+    }
+}
+
+.scroll-in {
+    animation: scrollIn 0.6s ease-out forwards;
+}
+
+.scroll-out {
+    animation: scrollOut 0.6s ease-out forwards;
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.translate-y-10 {
+    transform: translateY(50px);
+}
+
+
+.hero-section {
+    position: relative;
+    background-image: url('/images/big-background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }
