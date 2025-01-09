@@ -14,11 +14,11 @@ namespace InnoteksoWeb.Models
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
         public string Email { get; set; } = string.Empty;
 
-        [RegularExpression(@"^\+?[1-9]\d{1,14}$", ErrorMessage = "Please enter a valid contact number")]
+        [RegularExpression(@"^\+?[1-9]\d{1,14}$", ErrorMessage = "Please enter a valid contact number with country code")]
         public string? ContactNumber { get; set; }
 
         [Required(ErrorMessage = "Please enter your message")]
-        [MinLength(20, ErrorMessage = "Please provide more details about your project")]
+        [MinLength(20, ErrorMessage = "Please provide more details about your project or idea")]
         public string Message { get; set; } = string.Empty;
     }
 }
