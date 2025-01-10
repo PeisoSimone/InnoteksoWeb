@@ -161,8 +161,7 @@
     {
         if (firstRender)
         {
-            _module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/scrollAnimations.js");
-            await _module.InvokeVoidAsync("initScrollAnimations");
+            await JSRuntime.InvokeVoidAsync("initScrollAnimations");
         }
     }
 
