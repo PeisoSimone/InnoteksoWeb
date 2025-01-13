@@ -1,5 +1,5 @@
 module.exports = {
-    content: ["./**/*.{razor,html,cshtml}"],
+    content: ['./**/*.razor', './wwwroot/**/*.html'],
     theme: {
         extend: {
             animation: {
