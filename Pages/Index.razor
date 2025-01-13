@@ -3,60 +3,58 @@
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
 
-
-<Modal @ref="contactModal" title="Get in touch with us..." IsScrollable="true">
-    <BodyTemplate>
-        @if (showSuccessMessage)
-        {
-            <div class="alert alert-success">
-                Your message has been sent successfully!
-            </div>
-        }
-        else
-        {
-            <EditForm Model="contactModel" OnValidSubmit="HandleValidSubmit">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
-
-                <div class="mb-3">
-                    <label class="form-label">First Name</label>
-                    <InputText class="form-control" @bind-Value="contactModel.FirstName" />
-                    <ValidationMessage For="@(() => contactModel.FirstName)" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Last Name</label>
-                    <InputText class="form-control" @bind-Value="contactModel.LastName" />
-                    <ValidationMessage For="@(() => contactModel.LastName)" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Contact Number</label>
-                    <InputText class="form-control" @bind-Value="contactModel.ContactNumber" />
-                    <ValidationMessage For="@(() => contactModel.ContactNumber)" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <InputText class="form-control" @bind-Value="contactModel.Email" />
-                    <ValidationMessage For="@(() => contactModel.Email)" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Message</label>
-                    <InputTextArea class="form-control" rows="3" @bind-Value="contactModel.Message" />
-                    <ValidationMessage For="@(() => contactModel.Message)" />
-                </div>
-
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </EditForm>
-        }
-    </BodyTemplate>
-</Modal>
-
-
-
 <div class="min-h-screen bg-gradient-to-b from-gray-900 to-blue-900 text-white">
+
+    <Modal @ref="contactModal" title="Get in touch with us..." IsScrollable="true">
+        <BodyTemplate>
+            @if (showSuccessMessage)
+            {
+                <div class="alert alert-success">
+                    Your message has been sent successfully!
+                </div>
+            }
+            else
+            {
+                <EditForm Model="contactModel" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="mb-3">
+                        <label class="form-label">First Name</label>
+                        <InputText class="form-control" @bind-Value="contactModel.FirstName" />
+                        <ValidationMessage For="@(() => contactModel.FirstName)" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Last Name</label>
+                        <InputText class="form-control" @bind-Value="contactModel.LastName" />
+                        <ValidationMessage For="@(() => contactModel.LastName)" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Contact Number</label>
+                        <InputText class="form-control" @bind-Value="contactModel.ContactNumber" />
+                        <ValidationMessage For="@(() => contactModel.ContactNumber)" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <InputText class="form-control" @bind-Value="contactModel.Email" />
+                        <ValidationMessage For="@(() => contactModel.Email)" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Message</label>
+                        <InputTextArea class="form-control" rows="3" @bind-Value="contactModel.Message" />
+                        <ValidationMessage For="@(() => contactModel.Message)" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </EditForm>
+            }
+        </BodyTemplate>
+    </Modal>
+
     <!-- Hero Section -->
     
     <header class="hero-section h-screen flex items-center justify-center overflow-hidden">
@@ -83,8 +81,6 @@
             </div>
         </div>
     </header>
-
-
 
     <!-- Features Section -->
     <section class="py-20 bg-opacity-50 bg-gray-900">
