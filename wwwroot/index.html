@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="Innotekso - Innovating technology solutions for a brighter future. Explore our products and services designed to empower your business." />
+    <meta name="description" content="Innotekso derived from Innovation Technology Solutions - Innovating technology solutions for a brighter future. Explore our products and services designed to empower your business." />
     <meta name="keywords" content="Innotekso, technology, innovation, software solutions, business services, IT solutions" />
     <meta name="author" content="Innotekso Team" />
     <meta name="robots" content="index, follow" />
@@ -16,25 +15,34 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" media="print" onload="this.media='all'">
     <link rel="icon" type="image/webp" href="images/icon.webp">
 </head>
-
 <body>
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <div class="loading-container">
+            <div class="spinner-grow text-primary loading-spinner" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="loading-text">
+                ...innotekso...
+            </div>
+        </div>
     </div>
 
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="." class="reload">Reload</a>
-        <span class="dismiss">🗙</span>
+    <div id="blazor-error-ui" class="shadow">
+        <div class="error-message">
+            <div>
+                <i class="fas fa-exclamation-triangle text-danger me-2"></i>
+                Innotekso - An error has occurred. Please try reloading the page.
+                <a href="." class="reload">
+                    Reload
+                </a>
+            </div>
+            <span class="dismiss">×</span>
+        </div>
     </div>
+
     <script src="js/scrollAnimations.js" defer></script>
     <script src="_framework/blazor.webassembly.js" defer></script>
     <script src="js/bootstrap.bundle.min.js" defer></script>
-    <script src="_content/Blazor.Bootstrap/blazor.bootstrap.js"defer></script>
-
+    <script src="_content/Blazor.Bootstrap/blazor.bootstrap.js" defer></script>
 </body>
 </html>
