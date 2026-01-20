@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using InnoteksoWeb;
+using InnoteksoWebOld;
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
